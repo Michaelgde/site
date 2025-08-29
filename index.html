@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unity House Center</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px;
+      background: linear-gradient(to right, #002f4b, #517fa4);
+      color: white;
+    }
+    .hero img {
+      width: 45%;
+      border-radius: 15px;
+    }
+    .hero-text {
+      width: 50%;
+      line-height: 1.6;
+      white-space: pre-line; /* keeps your line breaks */
+    }
+    .hero-text h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    .donate-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 2.2rem;
+      transition: background 0.3s ease;
+    }
+    .donate-btn:hover {
+      background: #45a049;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero img, .hero-text {
+        width: 100%;
+      }
+      .hero img {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <img src="children.jpg" alt="Happy children"> <!-- replace with your image -->
+    <div class="hero-text">
+      <h1>Welcome to Unity House Center</h1>
+      <p>
+Hi, We are Unity House Center. Right now, 
+countless children are going without food,
+clean water, and the chance to simply be kids.
+No child should have to suffer like that.
+
+We try our best to help this children but the
+amount of kids coming in is making necessities
+more expensive and we are trying our best to
+cope.
+
+With your help, we can provide meals, shelter,
+and hope for these children in need. Even a
+small donation—just $20—can make a real
+difference.
+
+Please consider giving today. Together, we
+can change a child’s life. Thank you so much
+for your kindness and support.
+      </p>
+
+      <!-- Donate button with PayPal link -->
+      <a href="https://www.paypal.com/ncp/payment/HTMNRTCCD4ZMS" 
+         target="_blank" 
+         class="donate-btn">
+         Donate Here
+      </a>
+    </div>
+  </section>
+
+</body>
+</html>
