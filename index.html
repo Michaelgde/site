@@ -1,102 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unity House Center</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PiPay</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      color: #333;
+    /*
+      Inspired by common payment UIs, but NOT affiliated with PayPal.
+      Colors, spacing, and shapes are distinct. Customize freely.
+    */
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#101828;
+      --muted:#667085;
+      --primary:#2563eb;   /* blue */
+      --primary-600:#1e4fd6;
+      --border:#e5e7eb;
+      --radius:16px;
     }
-    .hero {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 40px;
-      background: linear-gradient(to right, #002f4b, #517fa4);
-      color: white;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    .hero img {
-      width: 45%;
-      border-radius: 15px;
+    .shell{
+      width:100%;
+      max-width:420px;
+      padding:24px 20px 32px;
     }
-    .hero-text {
-      width: 50%;
-      line-height: 1.6;
-      white-space: pre-line; /* keeps your line breaks */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:0 6px 20px rgba(0,0,0,.06);
+      padding:28px 22px 26px;
     }
-    .hero-text h1 {
-      font-size: 2rem;
-      margin-bottom: 15px;
+    .brand{
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-bottom:22px;
+      user-select:none;
     }
-    .donate-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 30px;
-      font-size: 2.2rem;
-      transition: background 0.3s ease;
+    .logo{
+      width:40px; height:40px; border-radius:12px;
+      background:linear-gradient(145deg, #60a5fa, #1d4ed8);
+      display:grid; place-items:center; color:white; font-weight:800; letter-spacing:.5px;
+      font-size:18px; box-shadow:0 6px 14px rgba(37,99,235,.35);
     }
-    .donate-btn:hover {
-      background: #45a049;
+    .wordmark{
+      font-size:34px; line-height:1; font-weight:800; letter-spacing:.2px;
     }
+    .wordmark .pi{color:#111827}
+    .wordmark .pay{color:var(--primary)}.field{margin:12px 0}
+label{display:block; font-size:14px; color:var(--muted); margin-bottom:6px}
+input{
+  width:100%;
+  height:48px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  padding:0 14px;
+  font-size:16px;
+  outline:none;
+  transition:border-color .15s, box-shadow .15s;
+  background:#fff;
+}
+input:focus{border-color:#b8c5ff; box-shadow:0 0 0 4px rgba(37,99,235,.12)}
 
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero img, .hero-text {
-        width: 100%;
-      }
-      .hero img {
-        margin-bottom: 20px;
-      }
-    }
+.forgot{
+  display:inline-block; margin:10px 0 16px; font-size:14px; text-decoration:none; color:var(--primary);
+}
+.btn{
+  width:100%; height:50px; border:none; border-radius:14px; cursor:pointer;
+  background:var(--primary); color:#fff; font-weight:700; font-size:17px;
+  box-shadow: 0 8px 18px rgba(37,99,235,.35);
+  transition:transform .05s ease, background .15s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn:hover{background:var(--primary-600)}
+
+.or{display:flex; align-items:center; gap:12px; color:var(--muted); margin:18px 0}
+.or::before, .or::after{content:""; height:1px; flex:1; background:var(--border)}
+
+.ghost{
+  width:100%; height:54px; border-radius:16px; background:#fff; border:2px solid var(--text);
+  font-weight:700; cursor:pointer;
+}
+
+.footer{margin-top:16px; text-align:center; font-size:12px; color:var(--muted)}
+.links{display:flex; gap:18px; justify-content:center; margin-top:8px}
+.links a{color:inherit; text-decoration:none}
+
+.lang{display:flex; justify-content:center; gap:8px; align-items:center; margin-top:14px}
+.flag{font-size:18px}
+
+@media (max-height:660px){
+  body{align-items:flex-start}
+  .shell{padding-top:24px}
+}
+
   </style>
 </head>
 <body>
-
-  <section class="hero">
-    <img src="children.jpg" alt="Happy children"> <!-- replace with your image -->
-    <div class="hero-text">
-      <h1>Welcome to Unity House Center</h1>
-      <p>
-Hi, We are Unity House Center. Right now, 
-countless children are going without food,
-clean water, and the chance to simply be kids.
-No child should have to suffer like that.
-
-We try our best to help this children but the
-amount of kids coming in is making necessities
-more expensive and we are trying our best to
-cope.
-
-With your help, we can provide meals, shelter,
-and hope for these children in need. Even a
-small donation—just $20—can make a real
-difference.
-
-Please consider giving today. Together, we
-can change a child’s life. Thank you so much
-for your kindness and support.
-      </p>
-
-      <!-- Donate button with PayPal link -->
-      <a href="https://www.paypal.com/ncp/payment/HTMNRTCCD4ZMS" 
-         target="_blank" 
-         class="donate-btn">
-         Donate Here
-      </a>
+  <main class="shell">
+    <section class="card" aria-label="PiPay Login">
+      <div class="brand" aria-label="PiPay brand">
+        <div class="logo" aria-hidden="true">π</div>
+        <div class="wordmark" aria-label="PiPay">
+          <span class="pi">Pi</span><span class="pay">Pay</span>
+        </div>
+      </div><form onsubmit="return handleSubmit(event)">
+    <div class="field">
+      <label for="email">Email address or mobile number</label>
+      <input id="email" name="email" type="text" inputmode="email" autocomplete="username" placeholder="you@example.com" required />
     </div>
-  </section>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+    </div>
+    <a class="forgot" href="#" onclick="alert('Password reset flow goes here.')">Forgotten password?</a>
+    <button class="btn" type="submit">Log In</button>
+    <div class="or">or</div>
+    <button class="ghost" type="button" onclick="alert('Sign up flow goes here.')">Sign Up</button>
 
-</body>
+    <div class="lang" role="group" aria-label="Language selector">
+      <span class="flag" aria-hidden="true">🇬🇧</span>
+      <select aria-label="Language">
+        <option>English (UK)</option>
+        <option>English (US)</option>
+        <option>Français</option>
+        <option>Español</option>
+      </select>
+    </div>
+  </form>
+
+  <div class="footer">
+    <div class="links">
+      <a href="#">Contact us</a>
+      <a href="#">Privacy</a>
+      <a href="#">Legal</a>
+      <a href="#">Worldwide</a>
+    </div>
+  </div>
+</section>
+
+  </main>  <script>
+    function handleSubmit(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if(!email || !pass){
+        alert('Please enter an email (or phone) and password.');
+        return false;
+      }
+      // Demo only. Replace with your own auth logic.
+      alert('Welcome to PiPay! (This is a demo – hook up your backend here.)');
+      return false;
+    }
+  </script></body>
 </html>
