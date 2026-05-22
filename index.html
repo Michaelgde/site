@@ -1,165 +1,454 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PiPay</title>
-  <style>
-    /*
-      Inspired by common payment UIs, but NOT affiliated with PayPal.
-      Colors, spacing, and shapes are distinct. Customize freely.
-    */
-    :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --text:#101828;
-      --muted:#667085;
-      --primary:#2563eb;   /* blue */
-      --primary-600:#1e4fd6;
-      --border:#e5e7eb;
-      --radius:16px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SturoVoxel Addon Docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background:var(--bg);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0b0f17;
+      color: white;
+      overflow-x: hidden;
     }
-    .shell{
-      width:100%;
-      max-width:420px;
-      padding:24px 20px 32px;
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(0,140,255,0.2), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(147,51,234,0.2), transparent 30%),
+        #0b0f17;
+      z-index: -1;
     }
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:0 6px 20px rgba(0,0,0,.06);
-      padding:28px 22px 26px;
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 14, 22, 0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 100;
     }
-    .brand{
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      margin-bottom:22px;
-      user-select:none;
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
     }
-    .logo{
-      width:40px; height:40px; border-radius:12px;
-      background:linear-gradient(145deg, #60a5fa, #1d4ed8);
-      display:grid; place-items:center; color:white; font-weight:800; letter-spacing:.5px;
-      font-size:18px; box-shadow:0 6px 14px rgba(37,99,235,.35);
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #4da3ff, #9f6bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .wordmark{
-      font-size:34px; line-height:1; font-weight:800; letter-spacing:.2px;
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
     }
-    .wordmark .pi{color:#111827}
-    .wordmark .pay{color:var(--primary)}.field{margin:12px 0}
-label{display:block; font-size:14px; color:var(--muted); margin-bottom:6px}
-input{
-  width:100%;
-  height:48px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  padding:0 14px;
-  font-size:16px;
-  outline:none;
-  transition:border-color .15s, box-shadow .15s;
-  background:#fff;
-}
-input:focus{border-color:#b8c5ff; box-shadow:0 0 0 4px rgba(37,99,235,.12)}
 
-.forgot{
-  display:inline-block; margin:10px 0 16px; font-size:14px; text-decoration:none; color:var(--primary);
-}
-.btn{
-  width:100%; height:50px; border:none; border-radius:14px; cursor:pointer;
-  background:var(--primary); color:#fff; font-weight:700; font-size:17px;
-  box-shadow: 0 8px 18px rgba(37,99,235,.35);
-  transition:transform .05s ease, background .15s ease;
-}
-.btn:active{transform:translateY(1px)}
-.btn:hover{background:var(--primary-600)}
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.8);
+      font-weight: 500;
+      transition: 0.2s;
+    }
 
-.or{display:flex; align-items:center; gap:12px; color:var(--muted); margin:18px 0}
-.or::before, .or::after{content:""; height:1px; flex:1; background:var(--border)}
+    .nav-links a:hover {
+      color: white;
+    }
 
-.ghost{
-  width:100%; height:54px; border-radius:16px; background:#fff; border:2px solid var(--text);
-  font-weight:700; cursor:pointer;
-}
+    .hero {
+      max-width: 1200px;
+      margin: auto;
+      padding: 120px 24px 80px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
 
-.footer{margin-top:16px; text-align:center; font-size:12px; color:var(--muted)}
-.links{display:flex; gap:18px; justify-content:center; margin-top:8px}
-.links a{color:inherit; text-decoration:none}
+    .hero h1 {
+      font-size: 4rem;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
 
-.lang{display:flex; justify-content:center; gap:8px; align-items:center; margin-top:14px}
-.flag{font-size:18px}
+    .hero h1 span {
+      background: linear-gradient(90deg, #4da3ff, #9f6bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-@media (max-height:660px){
-  body{align-items:flex-start}
-  .shell{padding-top:24px}
-}
+    .hero p {
+      color: rgba(255,255,255,0.75);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
 
-  </style>
-</head>
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 26px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #008cff, #7a5cff);
+      color: white;
+      box-shadow: 0 10px 30px rgba(0,140,255,0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .terminal-top {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff5f57; }
+    .yellow { background: #febc2e; }
+    .green { background: #28c840; }
+
+    pre {
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: #d6e7ff;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 24px 100px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 24px;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(120,150,255,0.35);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .docs-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    .docs-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .docs-content {
+      padding: 24px;
+    }
+
+    .function {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .function:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .function h4 {
+      color: #74b4ff;
+      margin-bottom: 10px;
+    }
+
+    .function p {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+    }
+  </style></head>
 <body>
-  <main class="shell">
-    <section class="card" aria-label="PiPay Login">
-      <div class="brand" aria-label="PiPay brand">
-        <div class="logo" aria-hidden="true">π</div>
-        <div class="wordmark" aria-label="PiPay">
-          <span class="pi">Pi</span><span class="pay">Pay</span>
-        </div>
-      </div><form onsubmit="return handleSubmit(event)">
-    <div class="field">
-      <label for="email">Email address or mobile number</label>
-      <input id="email" name="email" type="text" inputmode="email" autocomplete="username" placeholder="you@example.com" required />
-    </div>
-    <div class="field">
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
-    </div>
-    <a class="forgot" href="#" onclick="alert('Password reset flow goes here.')">Forgotten password?</a>
-    <button class="btn" type="submit">Log In</button>
-    <div class="or">or</div>
-    <button class="ghost" type="button" onclick="alert('Sign up flow goes here.')">Sign Up</button>
+  <div class="bg"></div>  <nav>
+    <div class="nav-inner">
+      <div class="logo">SturoVoxel</div><div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#api">API</a>
+    <a href="#examples">Examples</a>
+  </div>
+</div>
 
-    <div class="lang" role="group" aria-label="Language selector">
-      <span class="flag" aria-hidden="true">🇬🇧</span>
-      <select aria-label="Language">
-        <option>English (UK)</option>
-        <option>English (US)</option>
-        <option>Français</option>
-        <option>Español</option>
-      </select>
-    </div>
-  </form>
+  </nav>  <section class="hero">
+    <div>
+      <h1>
+        Making Addons for <span>SturoVoxel</span>
+      </h1><p>
+    Create powerful sandboxed addons using JavaScript.
+    SturoVoxel addons are translated into gdjs (GDevelop JavaScript)
+    while staying safe and optimized for gameplay.
+  </p>
 
-  <div class="footer">
-    <div class="links">
-      <a href="#">Contact us</a>
-      <a href="#">Privacy</a>
-      <a href="#">Legal</a>
-      <a href="#">Worldwide</a>
+  <div class="buttons">
+    <a href="#api" class="btn btn-primary">Explore API</a>
+    <a href="#examples" class="btn btn-secondary">View Examples</a>
+  </div>
+</div>
+
+<div class="hero-card">
+  <div class="terminal-top">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+  </div>
+
+<pre>
+if (!API.variables("modExampleMod123).init){
+  API.print("Hello SturoVoxel!");
+  API.variables("modExampleMod123).init = true
+  const loader = API.GLTFloader();
+  
+  loader.load("mob.glb", (gltf) => {
+    API.scene3D().add(gltf.scene);
+  });
+}
+
+if (API.keyPressed(65) && !API.variables("modExampleMod123).keyPressed) {
+  API.log("a key pressed");
+}</pre></div>
+
+  </section>  <section id="features">
+    <h2 class="section-title">Features</h2>
+    <p class="section-desc">
+      The addon system provides tools for gameplay scripting,
+      3D rendering, world interaction, player controls, and more.
+    </p><div class="grid">
+  <div class="card">
+    <h3>Sandboxed Addons</h3>
+    <p>
+      Addons run inside a protected environment so they cannot break the game.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>JavaScript Based</h3>
+    <p>
+      Write addons using JavaScript syntax translated into gdjs.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>3D Support</h3>
+    <p>
+      Access Three.js loaders, cameras, scenes, and raycasters.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Player Input</h3>
+    <p>
+      Detect keyboard and mouse events directly from your addon.
+    </p>
+  </div>
+</div>
+
+  </section>  <section id="api">
+    <h2 class="section-title">Addon API</h2>
+    <p class="section-desc">
+      Core functions available inside the addon sandbox.
+    </p><div class="docs-box">
+  <div class="docs-header">API Documentation</div>
+
+  <div class="docs-content">
+    <div class="function">
+      <h4>API.print(value)</h4>
+      <p>Prints a value to the in-game console.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.variables(name)</h4>
+      <p>Access sandbox variables for persistent addon storage.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.getBlockInSight()</h4>
+      <p>Returns the block currently targeted by the player.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.player()</h4>
+      <p>Returns the player object.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.keyPressed(key)</h4>
+      <p>Checks if a key is currently held down.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.onKeyPressed(key)</h4>
+      <p>Detects a single key press event.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.GLTFloader()</h4>
+      <p>Creates a GLTF model loader for loading 3D assets.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.scene3D()</h4>
+      <p>Returns the main Three.js scene used by the game.</p>
+    </div>
+
+    <div class="function">
+      <h4>API.camera()</h4>
+      <p>Returns the current Three.js camera.</p>
     </div>
   </div>
-</section>
+</div>
 
-  </main>  <script>
-    function handleSubmit(e){
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const pass = document.getElementById('password').value.trim();
-      if(!email || !pass){
-        alert('Please enter an email (or phone) and password.');
-        return false;
-      }
-      // Demo only. Replace with your own auth logic.
-      alert('Welcome to PiPay! (This is a demo – hook up your backend here.)');
-      return false;
-    }
-  </script></body>
+  </section>  <section id="examples">
+    <h2 class="section-title">Examples</h2>
+    <p class="section-desc">
+      Learn how to use the addon API with practical examples.
+    </p><div class="grid">
+  <div class="card">
+    <h3>Simple Message</h3>
+
+<pre>API.print("Hello World!");</pre></div>
+
+  <div class="card">
+    <h3>Keyboard Input</h3>
+
+<pre>if(API.keyPressed(65)) {
+  API.log("A key pressed");
+}</pre></div>
+
+  <div class="card">
+    <h3>3D Model Loading</h3>
+
+<pre>const loader = API.GLTFloader();
+
+const path = API.getPath()
+const pd = API.gethPathDelimiter()
+loader.load(path+pd+"modfoldername"+pd+"mob.glb", (gltf) => {
+  API.scene3D().add(gltf.scene);
+});</pre></div>
+</div>
+
+  </section>  <footer>
+    SturoVoxel Addon Documentation • Built for Mod Creators
+  </footer>
+</body>
 </html>
