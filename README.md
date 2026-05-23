@@ -1,4 +1,6 @@
 *API translation to GDJS(gdevelop JavaScript)*
+
+
   print: (v) => print(v),
   variables: (v) => hhj(v),
   log: (...args) => console.log(args),
